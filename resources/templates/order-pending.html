@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Received | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <style>
+        .pending-container {
+            max-width: 650px;
+            margin: 70px auto;
+            padding: 40px 25px;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .pending-icon {
+            font-size: 65px;
+        }
+
+        .pending-container h1 {
+            color: #526f45;
+        }
+
+        .pending-details {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f5f8f2;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .pending-button {
+            display: inline-block;
+            padding: 13px 28px;
+            background: #526f45;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .payment-message {
+            margin-top: 30px;
+        }
+
+        .verified-message h2 {
+            color: #386b43;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <a href="/">
+            <img src="/images/rithu-logo.png" alt="Rithu Logo">
+        </a>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products-page">Products</a>
+    </nav>
+
+</header>
+
+<main class="pending-container">
+
+    <div class="pending-icon" id="orderIcon">
+        ⏳
+    </div>
+
+    <h1 id="mainHeading">Order Received!</h1>
+
+    <p>Thank you for choosing Rithu Milk Products.</p>
+
+    <p id="mainMessage">
+        Your order has been received and is waiting for approval.
+    </p>
+
+    <!-- KEEP TRACK MY ORDER BUTTON UNCHANGED -->
+    <a th:href="@{/order-status}" class="order-status-button">
+        Track My Order
+    </a>
+
+    <div class="pending-details">
+
+        <h2>Order Details</h2>
+
+        <p>
+            <strong>Order Number:</strong>
+            <span th:text="'RY' + ${#numbers.formatInteger(order.id, 4)}"></span>
+        </p>
+
+        <p>
+            <strong>Customer:</strong>
+            <span th:text="${order.customerName}"></span>
+        </p>
+
+        <p>
+            <strong>Total Amount:</strong>
+            Rs. <span th:text="${order.total}"></span>
+        </p>
+
+        <p>
+            <strong>Payment Method:</strong>
+            <span th:text="${order.paymentMethod}"></span>
+        </p>
+
+        <p>
+            <strong>Payment Status:</strong>
+            <span id="paymentStatus"
+                  th:text="${order.paymentStatus}"></span>
+        </p>
+
+        <p>
+            <strong>Order Status:</strong>
+            <span id="orderStatus"
+                  th:text="${order.status}"></span>
+        </p>
+
+    </div>
+
+    <!-- BANK PAYMENT PENDING -->
+    <div id="bankPending"
+         class="payment-message"
+         th:if="${order.paymentMethod == 'BANK' and order.paymentStatus != 'Verified'}">
+
+        <h3>⏳ Payment Verification in Progress</h3>
+
+        <p>Please wait a few minutes while we verify your payment.</p>
+
+        <p>Once your payment is verified, your order will be approved.</p>
+
+    </div>
+
+    <!-- BANK PAYMENT VERIFIED -->
+    <div id="bankVerified"
+         class="payment-message verified-message"
+         th:style="${order.paymentStatus == 'Verified' and order.status == 'Approved'} ? 'display:block' : 'display:none'">
+
+        <h2>✓ Payment Verified!</h2>
+
+        <h3>Thank You! Your Order Has Been Placed Successfully!</h3>
+
+        <p>Your payment has been verified and your order has been approved.</p>
+
+    </div>
+
+    <!-- COD MESSAGE -->
+    <div th:if="${order.paymentMethod == 'COD'}">
+
+        <h3>Order Approval Pending</h3>
+
+        <p>Your order is waiting for staff approval.</p>
+
+    </div>
+
+    <p id="patienceMessage">Thank you for your patience!</p>
+
+    <a th:href="@{/products-page}" class="pending-button">
+        Continue Shopping
+    </a>
+
+</main>
+
+<footer>
+    <p>© 2026 Rithu Milk Products. All Rights Reserved.</p>
+</footer>
+
+
+<script th:inline="javascript">
+
+    const orderId = /*[[${order.id}]]*/ 0;
+
+    function checkPaymentStatus() {
+
+        fetch('/checkout/payment-status?orderId=' + orderId)
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error("Unable to check payment status");
+                }
+
+                return response.json();
+
+            })
+            .then(data => {
+
+                document.getElementById("paymentStatus").textContent =
+                    data.paymentStatus;
+
+                document.getElementById("orderStatus").textContent =
+                    data.orderStatus;
+
+                if (
+                    data.paymentStatus === "Verified" &&
+                    data.orderStatus === "Approved"
+                ) {
+
+                    document.getElementById("orderIcon").textContent = "✅";
+
+                    document.getElementById("mainHeading").textContent =
+                        "Order Confirmed!";
+
+                    document.getElementById("mainMessage").textContent =
+                        "Your payment has been successfully verified.";
+
+                    document.getElementById("bankPending")?.remove();
+
+                    document.getElementById("bankVerified").style.display =
+                        "block";
+
+                    document.getElementById("patienceMessage").textContent =
+                        "Thank you for shopping with Rithu Milk Products!";
+
+                    clearInterval(paymentCheckInterval);
+                }
+
+            })
+            .catch(error => {
+                console.log("Payment status check:", error);
+            });
+    }
+
+    const paymentCheckInterval = setInterval(checkPaymentStatus, 5000);
+
+</script>
+
+</body>
+</html>

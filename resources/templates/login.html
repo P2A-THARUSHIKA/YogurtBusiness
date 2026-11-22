@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Rithu Milk Products</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+<section class="register-page">
+
+    <div class="register-container">
+
+        <h1>Welcome Back!</h1>
+        <p>Login to your Rithu Milk Products account.</p>
+
+        <div class="register-error" th:if="${param.error}">
+            Invalid email, username or password. Please try again.
+        </div>
+
+        <div class="register-success" th:if="${param.registered}">
+            Your account has been created successfully! Please login.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+
+            <div class="register-input">
+                <label>Email Address or Admin Username</label>
+                <input type="text"
+                       name="email"
+                       placeholder="Enter your email or admin username"
+                       required>
+            </div>
+
+            <div class="register-input">
+                <label>Password</label>
+                <input type="password"
+                       name="password"
+                       placeholder="Enter your password"
+                       required>
+            </div>
+
+            <button type="submit" class="register-button">
+                Login
+            </button>
+
+        </form>
+
+        <div class="register-login">
+            Don't have an account?
+            <a th:href="@{/register}">Create Account</a>
+        </div>
+
+        <a th:href="@{/}" class="register-home">Back to Home</a>
+
+    </div>
+
+</section>
+
+</body>
+</html>

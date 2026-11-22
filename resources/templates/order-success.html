@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <style>
+        .success-container {
+            max-width: 650px;
+            margin: 70px auto;
+            padding: 40px 25px;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            font-size: 65px;
+            color: #5b8c4a;
+        }
+
+        .success-container h1 {
+            color: #526f45;
+            margin: 20px 0;
+        }
+
+        .success-details {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f5f8f2;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .success-details p {
+            margin: 12px 0;
+        }
+
+        .success-button {
+            display: inline-block;
+            padding: 13px 28px;
+            background: #526f45;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .success-button:hover {
+            background: #3e5734;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="/">
+                <img src="/images/rithu-logo.png" alt="Rithu Logo">
+            </a>
+        </div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/products-page">Products</a>
+        </nav>
+    </header>
+
+    <main class="success-container">
+
+        <div class="success-icon">✓</div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p>Thank you for choosing Rithu Milk Products.</p>
+
+        <p>Your order has been received successfully.</p>
+
+        <div class="success-details">
+
+            <h2>Order Details</h2>
+
+            <p>
+                <strong>Order ID:</strong>
+                <span th:text="${order.id}"></span>
+            </p>
+
+            <p>
+                <strong>Customer:</strong>
+                <span th:text="${order.customerName}"></span>
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                <span th:text="${order.phone}"></span>
+            </p>
+
+            <p>
+                <strong>Delivery Address:</strong>
+                <span th:text="${order.deliveryAddress}"></span>
+            </p>
+
+            <p>
+                <strong>Total Amount:</strong>
+                Rs.
+                <span th:text="${order.total}"></span>
+            </p>
+
+            <p>
+                <strong>Order Status:</strong>
+                <span th:text="${order.status}"></span>
+            </p>
+            <p>
+                <strong>Payment Method:</strong>
+                <span th:text="${order.paymentMethod}"></span>
+            </p>
+
+            <p>
+                <strong>Payment Status:</strong>
+                <span th:text="${order.paymentStatus}"></span>
+            </p>
+
+        </div>
+
+        <p>We appreciate your order!</p>
+
+        <a th:href="@{/products-page}" class="success-button">
+            Continue Shopping
+        </a>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Rithu Milk Products. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

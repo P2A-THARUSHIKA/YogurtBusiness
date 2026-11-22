@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+<header>
+
+    <div class="logo">
+        <img src="/images/rithu-logo.png" alt="Rithu Milk Products">
+    </div>
+
+    <nav> <a href="/">Home</a>
+          <a href="/products-page">Products</a>
+          <a href="/about">About</a>
+          <a href="/who-are-we">Who Are We</a>
+          <a href="/contact">Contact</a>
+    </nav>
+
+    <!-- ACCOUNT DROPDOWN -->
+    <div class="account-container">
+
+        <button type="button"
+                class="account-button"
+                onclick="toggleAccountDropdown()">
+
+            <span th:text="${accountInitials}">Guest</span>
+
+            <span class="dropdown-arrow">▼</span>
+
+        </button>
+
+        <div id="accountDropdown" class="account-dropdown">
+
+            <!-- GUEST ACCOUNT -->
+            <div th:if="${accountEmail == null}">
+
+                <p class="account-title">Welcome, Guest!</p>
+
+                <a th:href="@{/login}">Login</a>
+
+                <a th:href="@{/register}">Create Account</a>
+
+            </div>
+
+            <!-- LOGGED-IN CUSTOMER -->
+            <div th:if="${accountEmail != null}">
+
+                <p class="account-title">My Account</p>
+
+                <p class="account-email"
+                   th:text="${accountEmail}">
+                </p>
+
+                <a th:href="@{/my-orders}">My Orders</a>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-button">
+                        Logout
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+</section>
+<script>
+function toggleAccountDropdown() {
+
+    const dropdown =
+        document.getElementById("accountDropdown");
+
+    dropdown.classList.toggle("show-dropdown");
+}
+
+document.addEventListener("click", function(event) {
+
+    const container =
+        document.querySelector(".account-container");
+
+    const dropdown =
+        document.getElementById("accountDropdown");
+
+    if (container && !container.contains(event.target)) {
+        dropdown.classList.remove("show-dropdown");
+    }
+
+});
+</script>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+
+            <p class="hero-small">FRESH • PURE • DELICIOUS</p>
+
+            <h1>Pure Goodness<br>In Every Drop</h1>
+
+            <p class="hero-text">
+                Fresh and delicious dairy products made with love,
+                quality and care.
+            </p>
+
+           <div class="hero-buttons">
+    <a href="/products-page" class="btn primary-btn">
+        Explore Products
+    </a>
+
+    <a href="#about" class="btn secondary-btn">
+        Our Story
+    </a>
+</div>
+
+        </div>
+    </section>
+
+     <!-- HOME PAGE PROMOTION SLIDER -->
+
+<section class="home-slider">
+
+    <div class="slider-container">
+
+        <!-- SLIDE 1 -->
+        <div class="slide active"
+             style="background-image: url('/images/yogurt.jpg');">
+
+            <div class="slide-overlay"></div>
+
+            <div class="slide-content">
+                <span>RITHU SPECIAL OFFERS</span>
+                <h1>Special Discounts</h1>
+                <p>
+                    Enjoy delicious Rithu Milk Products
+                    and discover our latest special offers.
+                </p>
+                <a href="/products-page" class="slide-btn">
+                    Explore Offers
+                </a>
+            </div>
+
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide"
+             style="background-image: url('/images/drinking-yogurt-strawberry.jpg');">
+
+            <div class="slide-overlay"></div>
+
+            <div class="slide-content">
+                <span>DISCOVER SOMETHING DELICIOUS</span>
+                <h1>New Product Updates</h1>
+                <p>
+                    Discover delicious flavours and
+                    exciting product updates from Rithu.
+                </p>
+                <a href="/products-page" class="slide-btn">
+                    Discover Products
+                </a>
+            </div>
+
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide"
+             style="background-image: url('/images/wholeitems.jpg');">
+
+            <div class="slide-overlay"></div>
+
+            <div class="slide-content">
+                <span>NEWS & UPDATES</span>
+                <h1>What's New at Rithu?</h1>
+                <p>
+                    Stay connected with the latest
+                    news and updates from our company.
+                </p>
+                <a href="/about" class="slide-btn">
+                    Learn More
+                </a>
+            </div>
+
+        </div>
+
+        <!-- PREVIOUS / NEXT BUTTONS -->
+
+        <button class="slider-arrow prev"
+                onclick="changeSlide(-1)">❮</button>
+
+        <button class="slider-arrow next"
+                onclick="changeSlide(1)">❯</button>
+
+        <!-- SLIDE INDICATORS -->
+
+        <div class="slider-dots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+            <span class="dot" onclick="goToSlide(2)"></span>
+        </div>
+
+    </div>
+
+</section>
+    <!-- About Section -->
+<section class="about" id="about">
+
+    <h2>About Rithu</h2>
+
+    <h3>A Journey Built with Love and Dedication</h3>
+
+    <p>
+        Rithu Milk Products began its journey around 10 years ago
+        with a simple dream of creating delicious yoghurt with love
+        and dedication.
+    </p>
+
+    <p>
+        From our humble beginnings to where we are today,
+        we have continued our journey with hard work,
+        commitment and the trust of our customers.
+    </p>
+
+    <p>
+        At Rithu, we prepare our yoghurt without using
+        preservatives to extend its shelf life.
+        Our journey continues with the same passion
+        and dedication that inspired us from the beginning.
+    </p>
+
+    <a href="/about" class="btn primary-btn">
+        Learn More
+    </a>
+
+</section>
+
+<!-- Products Section -->
+
+<section class="products" id="products">
+
+    <h2>Our Products</h2>
+
+    <div class="product-container">
+
+        <div class="product-card">
+                <img src="/images/yogurt.jpg" alt="Yogurt">
+                <h3>Yogurt</h3>
+                <p>Fresh & creamy yogurt</p>
+            <a href="/products-page" class="btn primary-btn">
+        View More
+    </a>
+        </div>
+
+        <div class="product-card">
+                <img src="/images/drinking-yogurt.jpg" alt="Drinking Yogurt">
+                <h3>Drinking Yogurt</h3>
+                <p>Refreshing drinking yogurt</p>
+                <a href="/products-page" class="btn primary-btn">
+        View More
+    </a>
+        </div>
+
+        <div class="product-card">
+                <img src="/images/jelly-yogurt.jpg" alt="Jelly Yogurt">
+                <h3>Jelly Yogurt</h3>
+                <p>Delicious jelly yogurt</p>
+                <a href="/products-page" class="btn primary-btn">
+        View More
+    </a>
+        </div>
+
+        <div class="product-card">
+                <img src="/images/ice-cream.jpg" alt="Ice Cream">
+                <h3>Ice Cream</h3>
+                <p>Sweet and creamy ice cream</p>
+            <a href="/products-page" class="btn primary-btn">
+        View More
+    </a>
+        </div>
+
+        <div class="product-card">
+                <img src="/images/milk-ice.jpg" alt="Milk Ice">
+                <h3>Milk Ice</h3>
+                <p>Cool & refreshing</p>
+           <a href="/products-page" class="btn primary-btn">
+        View More
+    </a>
+        </div>
+
+    </div>
+
+</section>
+   <!-- Who Are We -->
+<section class="who-are-we" id="who-are-we">
+
+    <h2>Who Are We?</h2>
+
+    <h3>The People Behind Rithu</h3>
+
+    <p>
+        Behind every Rithu product is a dedicated team
+        working together with passion and commitment.
+        From our founder and business manager to our
+        hardworking staff, everyone plays an important
+        role in our journey.
+    </p>
+
+    <p>
+        Together, we work towards bringing delicious
+        dairy products and happiness to our customers.
+    </p>
+
+    <a href="/who-are-we" class="btn primary-btn">
+        Learn More
+    </a>
+
+</section>
+
+    <!-- Contact -->
+<section class="contact" id="contact">
+
+    <h2>Contact Us</h2>
+
+    <p>
+        Have a question or want to know more about
+        Rithu Milk Products? We would love to hear from you.
+    </p>
+
+    <a href="/contact" class="btn primary-btn">
+        Click Here to Connect
+    </a>
+
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Rithu Milk Products. All Rights Reserved.</p>
+    </footer>
+    <script>
+
+let currentSlide = 0;
+
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+
+    slides.forEach(slide => {
+        slide.classList.remove("active");
+    });
+
+    dots.forEach(dot => {
+        dot.classList.remove("active");
+    });
+
+    currentSlide = (index + slides.length) % slides.length;
+
+    slides[currentSlide].classList.add("active");
+    dots[currentSlide].classList.add("active");
+}
+
+function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+}
+
+function goToSlide(index) {
+    showSlide(index);
+}
+
+setInterval(() => {
+    changeSlide(1);
+}, 5000);
+
+</script>
+</body>
+</html>

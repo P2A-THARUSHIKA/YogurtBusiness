@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Status | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <section class="order-status-page">
+
+        <div class="order-status-container">
+
+            <div class="order-status-icon">✓</div>
+
+            <h1>Order Status</h1>
+
+            <p class="order-status-intro">
+                Thank you for choosing Rithu Milk Products.
+            </p>
+
+            <div class="order-status-card">
+
+                <h2>Order Information</h2>
+
+                <div class="status-row">
+                    <span>Order ID</span>
+                    <strong th:text="${order.id}"></strong>
+                </div>
+
+                <div class="status-row">
+                    <span>Customer Name</span>
+                    <strong th:text="${order.customerName}"></strong>
+                </div>
+
+                <div class="status-row">
+                    <span>Total Amount</span>
+                    <strong th:text="${'Rs. ' + order.total}"></strong>
+                </div>
+
+                <div class="status-row">
+                    <span>Payment Method</span>
+                    <strong th:text="${order.paymentMethod}"></strong>
+                </div>
+
+                <div class="status-row">
+                    <span>Payment Status</span>
+                    <strong class="order-status-label"
+                            th:text="${order.paymentStatus}">
+                    </strong>
+                </div>
+
+                <div class="status-row">
+                    <span>Order Status</span>
+                    <strong class="order-status-label"
+                            th:text="${order.status}">
+                    </strong>
+                </div>
+
+            </div>
+
+            <!-- BANK PAYMENT PENDING -->
+
+            <div class="status-message"
+                 th:if="${order.paymentStatus == 'Pending Verification'}">
+
+                <h3>Payment Verification in Progress</h3>
+
+                <p>
+                    Please wait a few minutes while we verify your payment.
+                </p>
+
+            </div>
+
+            <!-- TRY AGAIN -->
+
+            <div class="status-message try-again-message"
+                 th:if="${order.paymentStatus == 'Try Again'}">
+
+                <h3>Payment Verification Unsuccessful</h3>
+
+                <p>
+                    Please upload a new payment receipt.
+                </p>
+
+            </div>
+
+            <!-- APPROVED -->
+
+            <div class="status-message success-message"
+                 th:if="${order.status == 'Approved'}">
+
+                <h2>🎉 Order Placed Successfully!</h2>
+
+                <p th:if="${order.paymentMethod == 'BANK'}">
+                    Payment Verified Successfully!
+                </p>
+
+                <p>
+                    Your order has been successfully placed.
+                    Thank you for choosing Rithu Milk Products!
+                </p>
+
+            </div>
+
+            <!-- DELIVERED -->
+
+            <div class="status-message success-message"
+                 th:if="${order.status == 'Delivered'}">
+
+                <h2>Order Delivered Successfully!</h2>
+
+                <p>
+                    Thank you for shopping with Rithu Milk Products.
+                </p>
+
+            </div>
+
+            <a href="/products-page" class="order-status-button">
+                Continue Shopping
+            </a>
+
+            <a href="/" class="order-home-button">
+                Back to Home
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+</html>

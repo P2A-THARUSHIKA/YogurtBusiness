@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shopping Cart | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Rithu Milk Products</h1>
+
+        <nav>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/products-page}">Products</a>
+            <a th:href="@{/cart}">Cart</a>
+            <a th:href="@{/my-orders}">My Orders</a>
+
+        </nav>
+    </header>
+
+    <main class="cart-container">
+
+        <h2>My Shopping Cart</h2>
+
+        <!-- Cart Empty -->
+        <div th:if="${#lists.isEmpty(cartItems)}">
+            <p>Your shopping cart is empty.</p>
+            <a th:href="@{/products-page}">Continue Shopping</a>
+        </div>
+
+        <!-- Cart Products -->
+        <div th:unless="${#lists.isEmpty(cartItems)}">
+
+            <div class="cart-item" th:each="item : ${cartItems}">
+
+               <img th:src="@{'/images/' + ${item.image}}"
+                alt="Product Image">
+
+                <div class="cart-item-details">
+
+                    <h3 th:text="${item.product.name}"></h3>
+                    
+                    <p th:text="${'Flavour: ' + item.flavour}"></p>
+
+                    <p th:text="${'Rs. ' + item.product.price}"></p>
+
+                    <p th:text="${'Quantity: ' + item.quantity}"></p>
+
+                    <p th:text="${'Subtotal: Rs. ' + (item.product.price * item.quantity)}"></p>
+
+                    <form th:action="@{'/cart/remove/' + ${item.id}}"
+                     method="post">
+                    <button type="submit" class="remove-button">
+                     Remove
+                   </button>
+                </form>
+
+                </div>
+
+            </div>
+
+            <div class="cart-total">
+
+                <h3>
+                    Total:
+                    <span th:text="${'Rs. ' + total}"></span>
+                </h3>
+
+                <a th:href="@{/products-page}">Continue Shopping</a>
+
+                <!-- LOGGED IN CUSTOMER -->
+<a th:if="${loggedIn}"
+   th:href="@{/checkout}"
+   class="view-button">
+    Proceed to Checkout
+</a>
+
+<!-- GUEST CUSTOMER -->
+<button th:unless="${loggedIn}"
+        type="button"
+        class="view-button"
+        onclick="document.getElementById('loginPopup').style.display='flex'">
+    Proceed to Checkout
+</button>
+
+<!-- LOGIN POPUP -->
+<div id="loginPopup" class="login-popup">
+
+    <div class="login-popup-content">
+
+        <h2>Please Login First!</h2>
+
+        <p>Please login or create an account to continue checkout.</p>
+
+        <a th:href="@{/login}" class="popup-login-button">
+            Login
+        </a>
+
+        <a th:href="@{/register}" class="popup-register-button">
+            Create Account
+        </a>
+
+        <button type="button"
+                class="popup-close-button"
+                onclick="document.getElementById('loginPopup').style.display='none'">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

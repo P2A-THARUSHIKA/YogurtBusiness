@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Us | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body class="about-page">
+
+<header>
+
+    <div class="logo">
+        <a href="/">
+            <img src="/images/rithu-logo.png" alt="Rithu Logo">
+        </a>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products-page">Products</a>
+        <a href="/about">About</a>
+        <a href="/who-are-we">Who Are We</a>
+        <a href="/contact">Contact</a>
+        <a href="/cart" class="cart-link">🛒 Cart</a>
+    </nav>
+
+    <div th:replace="~{fragments/account :: accountMenu}"></div>
+
+</header>
+
+
+<!-- ABOUT HERO SECTION -->
+
+<section class="about-hero">
+
+    <div class="about-hero-text">
+
+        <span class="about-subtitle">WELCOME TO RITHU</span>
+
+        <h1>About Rithu Milk Products</h1>
+
+        <section class="about-story">
+    <h2>Our Story</h2>
+    <h3>A Decade of Love, Care & Trust</h3>
+
+    <p>
+        Rithu Milk Products began its journey over 10 years ago
+        with a simple dream — to create delicious yoghurt with
+        love, care, and dedication.
+    </p>
+
+    <p>
+        From the very beginning, Rithu has followed a commitment
+        to making yoghurt without using preservatives to extend
+        its shelf life.
+    </p>
+
+    <p>
+        What started as a small beginning has grown into a journey
+        built on passion, hard work, and the trust of our customers.
+    </p>
+
+    <p>
+        For over a decade, we have continued this journey with the
+        same dedication, bringing our products to customers who
+        have supported and believed in us.
+    </p>
+
+    <p>
+        To us, every product represents more than just taste.
+        It represents the love, care, and trust that have kept
+        Rithu growing through the years.
+    </p>
+
+    <h3>Rithu Milk Products – Made with Love, Trusted Through the Years.</h3>
+</section>
+
+        <a href="/products-page" class="about-button">
+            Explore Our Products
+        </a>
+
+    </div>
+
+
+    <div class="about-hero-images">
+
+        <img src="/images/wholeitems.jpg"
+             alt="Rithu Set Yogurt"
+             class="about-main-image">
+
+        <img src="/images/yogurt.jpg"
+             alt="plain Yogurt"
+             class="about-small-image">
+
+    </div>
+
+</section>
+
+
+<!-- OUR STORY -->
+
+<section class="about-story">
+
+    <div class="about-section-heading">
+
+        <span>OUR STORY</span>
+
+        <h2>A Taste of Happiness</h2>
+
+    </div>
+
+    <p>
+        At Rithu Milk Products, we believe that good food brings
+        happiness to everyday life. Our range of dairy products
+        offers different flavours and delicious experiences for
+        everyone to enjoy.
+    </p>
+
+</section>
+
+
+<!-- MISSION AND VISION -->
+
+<section class="about-mission-vision">
+
+    <div class="mission-card">
+
+        <h2>Our Mission</h2>
+
+        <p>
+            Our mission is to bring enjoyable dairy experiences
+            to our customers through a variety of delicious
+            products and flavours.
+        </p>
+
+    </div>
+
+
+    <div class="vision-card">
+
+        <h2>Our Vision</h2>
+
+        <p>
+            Our vision is to become a trusted and recognised
+            name in dairy products while continuing to create
+            happiness for our customers.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- WHY CHOOSE RITHU -->
+
+<section class="why-rithu">
+
+    <div class="about-section-heading">
+
+        <span>WHY CHOOSE US</span>
+
+        <h2>Why Choose Rithu?</h2>
+
+    </div>
+
+
+    <div class="why-rithu-grid">
+
+        <div class="why-card">
+            <h3>Delicious Flavours</h3>
+            <p>
+                Enjoy a variety of delightful flavours
+                for different tastes.
+            </p>
+        </div>
+
+
+        <div class="why-card">
+            <h3>Product Variety</h3>
+            <p>
+                Explore our range of yogurt, drinking
+                yogurt, ice cream and more.
+            </p>
+        </div>
+
+
+        <div class="why-card">
+            <h3>Customer Happiness</h3>
+            <p>
+                We want every Rithu experience to bring
+                a smile to our customers.
+            </p>
+        </div>
+
+
+        <div class="why-card">
+            <h3>Made for Everyone</h3>
+            <p>
+                Discover dairy treats that make
+                everyday moments more enjoyable.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- OUR PRODUCTS -->
+
+<section class="about-products">
+
+    <div class="about-section-heading">
+
+        <span>EXPLORE RITHU</span>
+
+        <h2>Our Product Range</h2>
+
+    </div>
+
+
+    <div class="about-product-grid">
+
+        <div class="about-product-card">
+            <img src="/images/yogurt.jpg" alt="Set Yogurt">
+            <h3>Set Yogurt</h3>
+        </div>
+
+
+        <div class="about-product-card">
+            <img src="/images/drinking-yogurt-strawberry.jpg"
+                 alt="Drinking Yogurt">
+            <h3>Drinking Yogurt</h3>
+        </div>
+
+
+        <div class="about-product-card">
+            <img src="/images/jelly-yogurt-strawberry.jpg"
+                 alt="Jelly Yogurt">
+            <h3>Jelly Yogurt</h3>
+        </div>
+
+
+        <div class="about-product-card">
+            <img src="/images/ice-cream-vanilla.jpg"
+                 alt="Ice Cream">
+            <h3>Ice Cream</h3>
+        </div>
+
+
+        <div class="about-product-card">
+            <img src="/images/milk-ice-vanilla.jpg"
+                 alt="Milk Ice">
+            <h3>Milk Ice</h3>
+        </div>
+
+    </div>
+
+    <div class="about-products-button">
+        <a href="/products-page" class="about-button">
+            View All Products
+        </a>
+    </div>
+
+</section>
+
+
+<!-- OUR PROMISE -->
+
+<section class="about-promise">
+
+    <h2>Our Promise to You</h2>
+
+    <p>
+        Thank you for being a part of the Rithu family.
+        We look forward to bringing more delicious moments
+        into your life.
+    </p>
+
+</section>
+
+
+<footer>
+
+    <p>© 2026 Rithu Milk Products. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+</html>

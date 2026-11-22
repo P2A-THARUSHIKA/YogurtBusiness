@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Orders | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+<div class="admin-orders-page">
+
+    <div class="admin-orders-container">
+
+        <div class="admin-orders-header">
+            <h1>Rithu Milk Products</h1>
+            <p>Admin Order Management</p>
+        </div>
+
+        <div class="admin-orders-summary">
+            <span>Total Orders</span>
+            <strong th:text="${#lists.size(orders)}">0</strong>
+        </div>
+
+        <div class="admin-orders-table-wrapper">
+
+            <table class="admin-orders-table">
+
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Phone</th>
+                        <th>Total</th>
+                        <th>Payment Method</th>
+                        <th>Payment Status</th>
+                        <th>Order Status</th>
+                        <th>Order Date</th>
+                        <th>Receipt</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="order : ${orders}">
+
+                        <td th:text="${'RY' + #numbers.formatInteger(order.id, 4)}"></td>
+                        <td th:text="${order.customerName}"></td>
+                        <td th:text="${order.phone}"></td>
+                        <td th:text="${'Rs. ' + order.total}"></td>
+                        <td th:text="${order.paymentMethod}"></td>
+
+                        <td>
+                            <span class="admin-status"
+                                  th:text="${order.paymentStatus}">
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="admin-status"
+                                  th:text="${order.status}">
+                            </span>
+                        </td>
+
+                        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+
+                        <td>
+                            <a th:if="${order.receiptImage != null}"
+   th:href="@{/admin/orders/{id}/receipt(id=${order.id})}"
+   target="_blank"
+   class="view-receipt-btn">
+
+    View Receipt
+
+</a>
+
+<span th:if="${order.receiptImage == null}">
+    No Receipt
+</span>
+                            <span th:unless="${order.receiptImage != null}">
+                                No Receipt
+                            </span>
+                        </td>
+                        <td>
+						
+
+                           <!-- Approve Button -->
+                            <form th:action="@{'/admin/orders/' + ${order.id} + '/approve'}"
+                             method="post"
+                             style="margin-bottom: 8px;">
+
+                            <button type="submit" class="admin-approve-btn">
+                             Approve
+                            </button>
+
+                            </form>
+
+                            <!-- Try Again Button -->
+                            <form th:if="${order.paymentMethod == 'BANK' and order.status != 'Approved'}"
+                             th:action="@{'/admin/orders/' + ${order.id} + '/try-again'}"
+                             method="post">
+
+                            <button type="submit" class="admin-tryagain-btn">
+                             Try Again
+                            </button>
+
+                            </form>
+
+                        </td>
+                        <td>
+
+    <!-- Pending orders -->
+    <form th:if="${order.status == 'Pending'}"
+          th:action="@{'/admin/orders/' + ${order.id} + '/approve'}"
+          method="post">
+
+        <button type="submit" class="approve-btn">
+            Approve
+        </button>
+
+    </form>
+
+    <!-- Try Again for Bank payment -->
+    <form th:if="${order.paymentMethod == 'BANK' and order.paymentStatus == 'Pending Verification'}"
+          th:action="@{'/admin/orders/' + ${order.id} + '/try-again'}"
+          method="post">
+
+        <button type="submit" class="try-again-btn">
+            Try Again
+        </button>
+
+    </form>
+
+    <!-- Approved orders -->
+    <form th:if="${order.status == 'Approved'}"
+          th:action="@{'/admin/orders/' + ${order.id} + '/delivered'}"
+          method="post">
+
+        <button type="submit" class="delivered-btn"
+                onclick="return confirm('Mark this order as Delivered?')">
+
+            Mark as Delivered
+
+        </button>
+
+    </form>
+
+    <!-- Delivered orders -->
+    <span th:if="${order.status == 'Delivered'}">
+        Delivered ✓
+    </span>
+
+</td>
+
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(orders)}">
+                        <td colspan="10" class="admin-empty">
+                            No orders available yet.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <a href="/" class="admin-back-button">Back to Website</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

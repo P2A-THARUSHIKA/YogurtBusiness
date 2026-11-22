@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Details | Rithu Milk Products</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+    <div class="logo">
+        <a href="/">
+            <img src="/images/rithu-logo.png" alt="Rithu Logo">
+        </a>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products-page">Products</a>
+        <a href="/cart">🛒 Cart</a>
+    </nav>
+
+</header>
+
+
+<!-- PRODUCT DETAILS -->
+<section class="details-container">
+
+    <!-- PRODUCT IMAGE -->
+    <div class="details-image">
+
+        <img id="productImage"
+             src="/images/yogurt.jpg"
+             alt="Rithu Product">
+
+    </div>
+
+
+    <!-- PRODUCT INFORMATION -->
+    <div class="details-info">
+
+        <p class="product-category">
+            RITHU MILK PRODUCTS
+        </p>
+
+        <h1 id="productName"
+            th:text="${productName}">
+            Product Name
+        </h1>
+
+        <p class="details-description"
+           th:text="${description}">
+        </p>
+
+
+        <!-- FLAVOUR SELECTION -->
+        <h3>Choose Your Flavour</h3>
+
+        <select id="flavourSelect"></select>
+
+
+        <!-- PRICE -->
+        <h2 id="productPrice">
+            Rs. 100.00
+        </h2>
+
+
+        <!-- QUANTITY -->
+        <div class="quantity-box">
+
+            <label for="quantity">Quantity:</label>
+
+            <button type="button" id="minusBtn">
+                −
+            </button>
+
+            <input type="number"
+                   id="quantity"
+                   value="1"
+                   min="1"
+                   max="99">
+
+            <button type="button" id="plusBtn">
+                +
+            </button>
+
+        </div>
+
+
+        <!-- ORDER PREVIEW -->
+        <div class="order-preview">
+
+            <h3>Your Selection</h3>
+
+            <img id="previewImage"
+                 src=""
+                 alt="Selected Product">
+
+            <h4 id="previewName"></h4>
+
+            <p id="previewFlavour"></p>
+
+            <p id="previewQuantity">
+                Quantity: 1
+            </p>
+
+            <h3 id="totalPrice">
+                Total: Rs. 100.00
+            </h3>
+
+        </div>
+
+
+       <!-- ADD TO CART -->
+
+<form th:action="@{/cart/add/{id}(id=${productId})}"
+      method="post"
+      id="cartForm">
+
+    <input type="hidden"
+           name="flavour"
+           id="cartFlavour">
+
+    <input type="hidden"
+           name="quantity"
+           id="cartQuantity"
+           value="1">
+
+    <!-- LOGGED-IN CUSTOMER -->
+    <button th:if="${loggedIn}"
+            type="submit"
+            class="view-button">
+        Add to Cart
+    </button>
+
+    <!-- GUEST CUSTOMER -->
+    <button th:unless="${loggedIn}"
+            type="button"
+            class="view-button"
+            onclick="document.getElementById('loginPopup').style.display='flex'">
+        Add to Cart
+    </button>
+
+</form>
+
+<!-- LOGIN POPUP -->
+
+<div id="loginPopup" class="login-popup">
+
+    <div class="login-popup-content">
+
+        <h2>Please Login First!</h2>
+
+        <p>Please login or create an account to add products to your cart.</p>
+
+        <a th:href="@{/login}" class="popup-login-button">
+            Login
+        </a>
+
+        <a th:href="@{/register}" class="popup-register-button">
+            Create Account
+        </a>
+
+        <button type="button"
+                class="popup-close-button"
+                onclick="document.getElementById('loginPopup').style.display='none'">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+</div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>
+        © 2026 Rithu Milk Products. All Rights Reserved.
+    </p>
+</footer>
+
+
+<!-- JAVASCRIPT -->
+<script th:inline="javascript">
+
+// PRODUCT ID FROM CONTROLLER
+const selectedProductId = /*[[${productId}]]*/ 1;
+
+
+// PRODUCT INFORMATION
+const products = {
+
+        1: {
+        name: "Set Yogurt",
+        price: 100,
+        flavours: {
+            "Plain": {
+                image: "yogurt.jpg",
+                colour: "#8ba878"
+            }
+        }
+    },
+
+    2: {
+        name: "Drinking Yogurt",
+        price: 150,
+
+        flavours: {
+
+            "Strawberry": {
+                image: "drinking-yogurt-strawberry.jpg",
+                colour: "#e96b91"
+            },
+
+            "Vanilla": {
+                image: "drinking-yogurt-vanila.jpg",
+                colour: "#e6c98d"
+            },
+
+            "Chocolate": {
+                image: "drinking-yogurt-chocolate.jpg",
+                colour: "#795548"
+            }
+
+        }
+    },
+
+
+    3: {
+        name: "Jelly Yogurt",
+        price: 120,
+
+        flavours: {
+
+            "Strawberry": {
+                image: "jelly-yogurt-strawberry.jpg",
+                colour: "#e96b91"
+            },
+
+            "Green Apple": {
+                image: "jelly-yogurt-green-apple.jpg",
+                colour: "#83b85b"
+            },
+
+            "Mixed Fruit": {
+                image: "jelly-yogurt-mixed-fruit.jpg",
+                colour: "#c17bbd"
+            }
+
+        }
+    },
+
+
+    4: {
+        name: "Ice Cream",
+        price: 200,
+
+        flavours: {
+
+            "Vanilla": {
+                image: "ice-cream-vanilla.jpg",
+                colour: "#e6c98d"
+            },
+
+            "Chocolate": {
+                image: "ice-cream-chocolate.jpg",
+                colour: "#795548"
+            },
+
+            "Strawberry": {
+                image: "ice-cream-strawberry.jpg",
+                colour: "#e96b91"
+            }
+
+        }
+    },
+
+
+    5: {
+        name: "Milk Ice",
+        price: 80,
+
+        flavours: {
+
+            "Vanilla": {
+                image: "milk-ice-vanilla.jpg",
+                colour: "#e6c98d"
+            },
+
+            "Chocolate": {
+                image: "milk-ice-chocolate.jpg",
+                colour: "#795548"
+            },
+
+            "Strawberry": {
+                image: "milk-ice-strawberry.jpg",
+                colour: "#e96b91"
+            },
+
+            "Wood Apple": {
+                image: "milk-ice-wood-apple.jpg",
+                colour: "#a77b4e"
+            }
+
+        }
+    }
+
+};
+
+
+// GET HTML ELEMENTS
+
+const product = products[selectedProductId];
+console.log("Product ID:", selectedProductId);
+console.log("Product:", product);
+
+const select = document.getElementById("flavourSelect");
+
+const image = document.getElementById("productImage");
+
+const name = document.getElementById("productName");
+
+const price = document.getElementById("productPrice");
+
+const quantity = document.getElementById("quantity");
+
+const previewImage = document.getElementById("previewImage");
+
+const previewName = document.getElementById("previewName");
+
+const previewFlavour = document.getElementById("previewFlavour");
+
+const previewQuantity = document.getElementById("previewQuantity");
+
+const totalPrice = document.getElementById("totalPrice");
+
+const minusBtn = document.getElementById("minusBtn");
+
+const plusBtn = document.getElementById("plusBtn");
+
+const addToCartBtn = document.getElementById("addToCartBtn");
+const cartFlavour = document.getElementById("cartFlavour");
+const cartQuantity = document.getElementById("cartQuantity");
+
+// CHECK PRODUCT
+
+if (product) {
+
+
+    // CREATE FLAVOUR OPTIONS
+
+    Object.keys(product.flavours).forEach(flavour => {
+
+        const option = document.createElement("option");
+
+        option.value = flavour;
+
+        option.textContent = flavour;
+
+        select.appendChild(option);
+
+    });
+
+
+    // UPDATE TOTAL PRICE
+
+function updateTotal() {
+
+    let count = Number(quantity.value);
+
+    if (!Number.isInteger(count) || count < 1) {
+        count = 1;
+        quantity.value = 1;
+    }
+
+    if (count > 99) {
+        count = 99;
+        quantity.value = 99;
+    }
+
+    cartQuantity.value = count;
+
+    const total = product.price * count;
+
+    previewQuantity.textContent = "Quantity: " + count;
+
+    totalPrice.textContent = "Total: Rs. " + total.toFixed(2);
+}
+
+
+    // UPDATE PRODUCT WHEN FLAVOUR CHANGES
+
+    function updateProduct() {
+    
+     const flavour = select.value;
+     cartFlavour.value = flavour;
+
+     console.log("Selected Flavour:", flavour);
+
+    const details = product.flavours[flavour];
+
+    if (!details) {
+        return;
+    }
+     document.getElementById("cartForm").addEventListener("submit", function() {
+     cartFlavour.value = select.value;
+     cartQuantity.value = quantity.value;
+     console.log("Flavour sent:", cartFlavour.value);
+     console.log("Quantity sent:", cartQuantity.value);
+    });
+
+        // Product name
+
+        name.textContent =
+            product.name + " - " + flavour;
+
+
+        // Product image
+
+        image.src =
+            "/images/" + details.image;
+
+        image.alt = name.textContent;
+
+
+        // Preview image
+
+        previewImage.src =
+            "/images/" + details.image;
+
+        previewImage.alt = name.textContent;
+
+
+        // Unit price
+
+        price.textContent =
+            "Unit Price: Rs. " + product.price.toFixed(2);
+
+
+        // Preview information
+
+        previewName.textContent =
+            product.name;
+
+        previewFlavour.textContent =
+            "Flavour: " + flavour;
+
+
+        // Change colour
+
+        document.documentElement.style.setProperty(
+            "--flavour-color",
+            details.colour
+        );
+
+
+        // Update total
+
+        updateTotal();
+
+    }
+
+
+    // PLUS BUTTON
+
+    plusBtn.addEventListener("click", function() {
+
+        if (Number(quantity.value) < 99) {
+
+            quantity.value =
+                Number(quantity.value) + 1;
+
+            updateTotal();
+
+        }
+
+    });
+
+
+    // MINUS BUTTON
+
+    minusBtn.addEventListener("click", function() {
+
+        if (Number(quantity.value) > 1) {
+
+            quantity.value =
+                Number(quantity.value) - 1;
+
+            updateTotal();
+
+        }
+
+    });
+
+
+    // MANUAL QUANTITY CHANGE
+
+    quantity.addEventListener("change", updateTotal);
+
+
+    // FLAVOUR CHANGE
+
+    select.addEventListener("change", updateProduct);
+
+
+    // INITIAL PRODUCT DISPLAY
+
+    updateProduct();
+
+
+} else {
+
+    alert("Product not found!");
+
+}
+
+</script>
+
+</body>
+</html>

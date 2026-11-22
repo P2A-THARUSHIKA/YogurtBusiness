@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Rithu Milk Products</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<section class="register-page">
+
+    <div class="register-container">
+
+        <h1>Create Your Account</h1>
+        <p>Join Rithu Milk Products and enjoy shopping with us.</p>
+
+        <div class="register-error" th:if="${error}" th:text="${error}"></div>
+
+        <form th:action="@{/register}" th:object="${customer}" method="post">
+
+            <div class="register-input">
+                <label>Full Name</label>
+                <input type="text" th:field="*{fullName}"
+                       placeholder="Enter your full name" required>
+            </div>
+
+            <div class="register-input">
+                <label>Email Address</label>
+                <input type="email" th:field="*{email}"
+                       placeholder="Enter your email" required>
+            </div>
+
+            <div class="register-input">
+                <label>Phone Number</label>
+                <input type="tel" th:field="*{phone}"
+                       placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="register-input">
+                <label>Password</label>
+                <input type="password" th:field="*{password}"
+                       placeholder="Create a password" minlength="8" required>
+            </div>
+
+            <button type="submit" class="register-button">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="register-login">
+            Already have an account?
+            <a th:href="@{/login}">Login</a>
+        </div>
+
+        <a th:href="@{/}" class="register-home">Back to Home</a>
+
+    </div>
+
+</section>
+
+</body>
+</html>

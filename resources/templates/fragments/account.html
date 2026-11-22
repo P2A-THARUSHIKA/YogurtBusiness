@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="accountMenu">
+
+    <div class="account-container">
+
+        <div class="account-profile"
+             onclick="toggleAccountDropdown()">
+
+            <div class="account-avatar"
+                 th:text="${accountInitials}">G</div>
+
+            <span class="account-label"
+                  th:text="${accountLabel}">Guest</span>
+
+        </div>
+
+        <div id="accountDropdown" class="account-dropdown">
+
+            <div th:if="${accountEmail == null}">
+
+                <p class="account-title">Welcome, Guest!</p>
+
+                <a th:href="@{/login}">Login</a>
+
+                <a th:href="@{/register}">Create Account</a>
+
+            </div>
+
+            <div th:if="${accountEmail != null}">
+
+                <p class="account-title">My Account</p>
+
+                <p class="account-email"
+                   th:text="${accountEmail}"></p>
+
+                <a th:href="@{/my-orders}">My Orders</a>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-button">
+                        Logout
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAccountDropdown() {
+            document.getElementById("accountDropdown")
+                .classList.toggle("show-dropdown");
+        }
+
+        document.addEventListener("click", function(event) {
+
+            const container =
+                document.querySelector(".account-container");
+
+            const dropdown =
+                document.getElementById("accountDropdown");
+
+            if (container && !container.contains(event.target)) {
+                dropdown.classList.remove("show-dropdown");
+            }
+        });
+    </script>
+
+</div>
+
+</body>
+</html>

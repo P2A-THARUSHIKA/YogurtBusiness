@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who We Are | Rithu Milk Products</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body class="who-are-we-page">
+
+<header>
+    <div class="logo">
+        <a href="/">
+            <img src="/images/rithu-logo.png" alt="Rithu Logo">
+        </a>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products-page">Products</a>
+        <a href="/about">About</a>
+        <a href="/who-are-we">Who Are We</a>
+        <a href="/contact">Contact</a>
+        <a href="/cart" class="cart-link">🛒 Cart</a>
+    </nav>
+
+    <div th:replace="~{fragments/account :: accountMenu}"></div>
+</header>
+
+
+<!-- HERO SECTION -->
+<section class="who-hero">
+
+    <div class="who-hero-content">
+        <span class="who-small-title">GET TO KNOW US</span>
+
+        <h1>Who We Are</h1>
+
+        <h2>A Journey Built on Love, Dedication & Trust</h2>
+
+        <p>
+            Behind every Rithu product is a story of passion,
+            commitment and teamwork. For over a decade,
+            we have continued our journey with the support
+            of our customers and the dedication of our team.
+        </p>
+
+        <a href="#our-people" class="who-button">
+            Meet Our Team
+        </a>
+    </div>
+
+    <div class="who-hero-image">
+        <img src="/images/wholeitems.jpg" alt="Rithu Milk Products Collection">
+    </div>
+
+</section>
+
+
+<!-- WHO WE ARE -->
+<section class="who-intro">
+
+    <span class="who-small-title">ABOUT OUR BUSINESS</span>
+
+    <h2>More Than Just a Dairy Business</h2>
+
+    <p>
+        Rithu Milk Products is a business built through years
+        of dedication, hard work and a commitment to serving
+        its customers.
+
+        What began as a dream has continued to grow into
+        a journey supported by a dedicated team and the trust
+        of our customers.
+    </p>
+
+</section>
+
+
+<!-- OWNER SECTION -->
+<section class="owner-section" id="our-people">
+
+    <div class="owner-image">
+        <img src="/images/owner1.jpeg" alt="Founder and Owner of Rithu Milk Products">
+    </div>
+
+    <div class="owner-details">
+
+        <span class="who-small-title">THE PERSON BEHIND RITHU</span>
+
+        <h2>Meet Our Founder & Owner</h2>
+
+        <h3>Irathna Wallige Renuka Wasanthi De Soisa</h3>
+
+        <span class="person-role">Founder & Owner</span>
+
+        <p>
+            Behind Rithu Milk Products is a woman whose journey
+            reflects dedication, determination and an unwavering
+            belief in her dream.
+        </p>
+
+        <p>
+            Through her commitment and hard work, she has guided
+            Rithu through more than a decade of growth. She believes
+            in encouraging others, sharing opportunities and
+            motivating the people around her to move forward.
+        </p>
+
+        <p>
+            To her, Rithu is much more than a business.
+            It is like her own child — something she has nurtured
+            with love, patience and dedication.
+        </p>
+
+        <p class="owner-quote">
+            "A business built with love, strengthened by dedication
+            and carried forward through trust."
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- MANAGER SECTION -->
+<section class="manager-section">
+
+    <div class="manager-details">
+
+        <span class="who-small-title">LEADING OUR DAILY OPERATIONS</span>
+
+        <h2>Meet Our Manager</h2>
+
+        <h3>Pramodya Kavindi Croos</h3>
+
+        <span class="person-role">Business Manager</span>
+
+        <p>
+            Our manager plays an important role in keeping
+            the daily activities of Rithu Milk Products
+            organised and running smoothly.
+        </p>
+
+        <div class="manager-duties">
+
+            <div>✓ Coordinating daily business operations</div>
+
+            <div>✓ Organising production activities</div>
+
+            <div>✓ Coordinating product distribution</div>
+
+            <div>✓ Maintaining business records and documentation</div>
+
+            <div>✓ Supporting and coordinating team members</div>
+
+            <div>✓ Helping maintain smooth communication and workflow</div>
+
+        </div>
+
+    </div>
+
+    <div class="manager-image">
+        <img src="/images/manager.jpeg" alt="Manager of Rithu Milk Products">
+    </div>
+
+</section>
+
+
+<!-- STAFF SECTION -->
+<section class="staff-section">
+
+    <span class="who-small-title">THE PEOPLE WHO MAKE IT HAPPEN</span>
+    <h2>Our Dedicated Team</h2>
+
+<p class="staff-intro">
+    Behind every product is the hard work of our dedicated
+    team. Our ten team members contribute to different
+    activities that keep Rithu moving forward.
+</p>
+
+<div class="staff-grid">
+
+    <div class="staff-card">
+        <div class="staff-icon">🥛</div>
+        <h3>Production Team</h3>
+        <p>
+            Responsible for yoghurt making and supporting
+            the daily production process.
+        </p>
+    </div>
+
+    <div class="staff-card">
+        <div class="staff-icon">🚚</div>
+        <h3>Distribution Team</h3>
+        <p>
+            Helping deliver Rithu products and coordinate
+            product distribution.
+        </p>
+    </div>
+
+    <div class="staff-card">
+        <div class="staff-icon">📋</div>
+        <h3>Documentation Team</h3>
+        <p>
+            Supporting business records and the
+            documentation process.
+        </p>
+    </div>
+
+</div>
+
+<div class="staff-count">
+    <strong>10</strong>
+    <span>Dedicated Team Members</span>
+</div>
+
+</section>
+
+<!-- TEAM MESSAGE -->
+
+<section class="who-closing">
+
+<h2>Growing Together, Moving Forward Together</h2>
+
+<p>
+    Every person at Rithu plays a part in our journey.
+    With dedication, teamwork and the trust of our customers,
+    we look forward to continuing this journey together.
+</p>
+
+<a href="/products-page" class="who-button">
+    Explore Our Products
+</a>
+
+</section>
+
+<footer>
+    <p>© 2026 Rithu Milk Products. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
+		

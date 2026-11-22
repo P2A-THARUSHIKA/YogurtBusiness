@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Rithu Milk Products</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body class="contact-page">
+
+<header>
+    <div class="logo">
+        <a href="/">
+            <img src="/images/rithu-logo.png" alt="Rithu Logo">
+        </a>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products-page">Products</a>
+        <a href="/about">About</a>
+        <a href="/who-are-we">Who Are We</a>
+        <a href="/contact">Contact</a>
+        <a href="/cart" class="cart-link">🛒 Cart</a>
+    </nav>
+
+    <div th:replace="~{fragments/account :: accountMenu}"></div>
+</header>
+
+<section class="contact-hero">
+    <h1>Contact Us</h1>
+    <p>We would love to hear from you. Get in touch with Rithu Milk Products!</p>
+</section>
+<div th:if="${successMessage}" class="contact-toast success-toast" id="contactToast">
+    <span>✓</span>
+    <p th:text="${successMessage}"></p>
+    <button type="button" onclick="closeContactToast()">×</button>
+</div>
+
+<div th:if="${errorMessage}" class="contact-toast error-toast" id="contactToast">
+    <span>!</span>
+    <p th:text="${errorMessage}"></p>
+    <button type="button" onclick="closeContactToast()">×</button>
+</div>
+<main class="contact-container">
+
+    <section class="contact-info">
+        <h2>Get In Touch</h2>
+        <p>Have a question about our products? We are happy to help you.</p>
+
+       <div class="contact-info-item">
+    <h3>📞 Phone</h3>
+    <p>
+        <a href="tel:+94776189892">+94 77 618 9892</a>
+    </p>
+    <p>
+        <a href="tel:+94778862636">+94 77 886 2636</a>
+    </p>
+</div>
+
+<div class="contact-info-item">
+    <h3>✉️ Email</h3>
+    <p>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=rithuproducts3@gmail.com&su=Inquiry%20-%20Rithu%20Milk%20Products"
+           target="_blank"
+           rel="noopener noreferrer">
+            rithuproducts3@gmail.com
+        </a>
+    </p>
+</div>
+
+<div class="contact-info-item">
+    <h3>📍 Address</h3>
+    <p>
+        <a href="https://www.google.com/maps/search/?api=1&query=247%20Kottapitiya%20Henyaya%20Bangadeniya%20Sri%20Lanka"
+           target="_blank"
+           rel="noopener noreferrer">
+            247, Kottapitiya,<br>
+            Henyaya, Bangadeniya,<br>
+            Sri Lanka.
+        </a>
+    </p>
+</div>
+    </section>
+
+    <section class="contact-form-section">
+        <h2>Send Us a Message</h2>
+
+        <form class="contact-form" th:action="@{/contact/send}" method="post">
+
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name"
+                   placeholder="Enter your name" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email"
+                   placeholder="Enter your email" required>
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject"
+                   placeholder="Enter subject" required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" rows="5"
+                      placeholder="Write your message here..." required></textarea>
+
+            <button type="submit">Send Message</button>
+
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Rithu Milk Products. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

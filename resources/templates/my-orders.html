@@ -1,0 +1,239 @@
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | Rithu Milk Products</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="/">
+                <img src="/images/rithu-logo.png" alt="Rithu Logo">
+            </a>
+        </div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/products-page">Products</a>
+            <a href="/about">About</a>
+            <a href="/who-are-we">Who Are We</a>
+            <a href="/contact">Contact</a>
+            <a href="/cart">🛒 Cart</a>
+        </nav>
+    </header>
+
+    <!-- My Orders -->
+    <main class="my-orders-page">
+
+        <section class="orders-heading">
+            <h1>My Orders</h1>
+            <p>
+                Welcome to your order history.
+                You can view your previous purchases and order details here.
+            </p>
+        </section>
+
+        <!-- Success Message -->
+        <div th:if="${successMessage}"
+             class="receipt-message success-message"
+             th:text="${successMessage}">
+        </div>
+
+        <!-- Error Message -->
+        <div th:if="${errorMessage}"
+             class="receipt-message error-message"
+             th:text="${errorMessage}">
+        </div>
+
+        <!-- Empty Orders -->
+        <div class="empty-orders" th:if="${#lists.isEmpty(orders)}">
+            <h2>No Orders Yet!</h2>
+            <p>You haven't placed any orders yet.</p>
+
+            <a href="/products-page" class="order-shop-btn">
+                Explore Products
+            </a>
+        </div>
+
+        <!-- Order List -->
+        <section class="orders-list"
+                 th:unless="${#lists.isEmpty(orders)}">
+
+            <body>
+                <div class="order-card"
+                 th:each="order : ${orders}"
+                 th:attr="data-order-id=${order.id}">
+
+                <!-- Order Header -->
+                <div class="order-card-header">
+                    <div>
+                        <h3 th:text="'Order RY' + ${#numbers.formatInteger(order.id, 4)}">
+                          Order RY0001
+                        </h3>
+
+                        <p>
+                            <span>Order Date:</span>
+
+                            <span th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}">
+                                Date
+                            </span>
+                        </p>
+                    </div>
+
+                    <span class="order-status"
+                          th:text="${order.status}"
+                          th:classappend="${order.status == 'Delivered'} ? ' delivered' :
+                                          (${order.status == 'Approved'} ? ' approved' : ' pending')">
+                        Pending
+                    </span>
+                </div>
+
+                <!-- Products -->
+                <div class="order-products">
+
+                    <div class="order-product"
+                         th:each="item : ${orderItemsMap[order.id]}">
+
+                        <img th:src="@{/images/{img}(img=${item.product.image})}"
+                             th:alt="${item.product.name}">
+
+                        <div class="order-product-details">
+
+                            <h4 th:text="${item.product.name}">
+                                Product Name
+                            </h4>
+
+                            <p>
+                                Flavour:
+                                <span th:text="${item.flavour}"></span>
+                            </p>
+
+                            <p>
+                                Quantity:
+                                <span th:text="${item.quantity}"></span>
+                            </p>
+
+                            <p>
+                                Unit Price:
+                                ¥<span th:text="${item.unitPrice}"></span>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Information -->
+                <div class="order-information">
+
+                    <div>
+                        <span>Payment Method</span>
+                        <strong th:text="${order.paymentMethod}"></strong>
+                    </div>
+
+                    <div>
+                        <span>Payment Status</span>
+                        <strong class="payment-status-text"
+                            th:text="${order.paymentStatus}">
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Order Total</span>
+                        <strong class="order-total">
+                            ¥<span th:text="${order.total}"></span>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <!-- Try Again Message -->
+                <div class="receipt-retry-section"
+     th:style="${order.paymentStatus == 'Try Again'} ? 'display:block' : 'display:none'">
+
+    <p class="receipt-retry-message">
+        ⚠️ Your payment receipt could not be verified.
+        Please upload your receipt with better quality.
+    </p>
+
+    <form th:action="@{/my-orders/{id}/upload-receipt(id=${order.id})}"
+          method="post"
+          enctype="multipart/form-data"
+          class="receipt-upload-form">
+
+        <label>Choose New Payment Receipt</label>
+
+        <input type="file"
+               name="receiptFile"
+               accept="image/jpeg,image/png,image/webp"
+               required>
+
+        <button type="submit" class="upload-receipt-btn">
+            Upload New Receipt
+        </button>
+
+    </form>
+</div>
+
+<!-- Close Order Card -->
+</div>
+
+<script>
+
+async function checkOrderPayments() {
+
+    const orders = document.querySelectorAll(".order-card");
+
+    for (const orderCard of orders) {
+
+        const orderId = orderCard.dataset.orderId;
+
+        try {
+
+            const response = await fetch(
+                `/checkout/payment-status?orderId=${orderId}`
+            );
+
+            if (!response.ok) {
+                continue;
+            }
+
+            const data = await response.json();
+
+            const paymentStatus =
+                orderCard.querySelector(".payment-status-text");
+
+            const retrySection =
+                orderCard.querySelector(".receipt-retry-section");
+
+            if (paymentStatus) {
+                paymentStatus.textContent = data.paymentStatus;
+            }
+
+            if (retrySection) {
+
+                if (data.paymentStatus === "Try Again") {
+                    retrySection.style.display = "block";
+                } else {
+                    retrySection.style.display = "none";
+                }
+
+            }
+
+        } catch (error) {
+            console.log("Payment status check failed:", error);
+        }
+    }
+}
+
+// Check every 5 seconds
+setInterval(checkOrderPayments, 5000);
+
+</script>
+</body>
